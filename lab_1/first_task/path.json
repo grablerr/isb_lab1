@@ -1,0 +1,5 @@
+{
+  "folder" : "first_task/texts",
+  "input_text" : "text_for_encryption_task1.txt",
+  "output_text" : "encrypted_text_for_task1.txt"
+}
