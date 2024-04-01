@@ -2,33 +2,37 @@ from work_with_json_file import read_path_file
 from square import polybius_square, punctuation_symbols, path
 
 
-def encrypt_with_polybius_square(message: str, square: dict) -> str:
+def encrypt_with_polybius_square(message: str, square: list) -> str:
     """
-      Encrypts a message using a Polybius square.
-      Args:
-          message (str): The message to be encrypted.
-          square (dict): The Polybius square as a dictionary where keys are uppercase letters
-                         and values are their corresponding encrypted symbols.
-      Returns:
-          str: The encrypted message.
-      """
+    Encrypts a message using a Polybius square.
+    Args:
+        message (str): The message to be encrypted.
+        square (list): The Polybius square as a list of lists where each sublist represents a row
+                       and contains encrypted symbols corresponding to uppercase letters.
+    Returns:
+        str: The encrypted message.
+    """
     encrypted_text = ""
+    message = message.upper()
     try:
         for char in message:
-            if char.upper() in punctuation_symbols:
+            if char in punctuation_symbols:
                 encrypted_text += char
             else:
-                char_upper = char.upper()
-                try:
-                    encrypted_char = square.get(char_upper)
-                    if encrypted_char:
-                        encrypted_text += "(" + encrypted_char + ")"
-                    else:
-                        encrypted_text += char
-                except Exception as e:
-                    print(f"An exception occurred while encrypting character '{char}': {e}")
-    except Exception as exception:
-        print(f"An exception was found. Exception name - {exception}")
+                char_found = False
+                for i, row in enumerate(square):
+                    if char in row:
+                        col = row.index(char)
+                        encrypted_text += f"({i + 1}{col + 1})"
+                        char_found = True
+                        break
+                if not char_found:
+                    raise ValueError(
+                        f"Character '{char}' not found in the Polybius square."
+                    )
+    except Exception as e:
+        print("An error occurred:", e)
+        return
     return encrypted_text
 
 
@@ -47,9 +51,9 @@ def main() -> None:
     """
     paths_data = read_path_file(path)
     if paths_data:
-        folder = paths_data.get("folder", "")
-        input_text = paths_data.get("input_text", "")
-        output_text = paths_data.get("output_text", "")
+        folder = paths_data[0]
+        input_text = paths_data[1]
+        output_text = paths_data[2]
 
         if folder and input_text and output_text:
             try:

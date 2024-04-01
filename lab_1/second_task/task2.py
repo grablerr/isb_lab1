@@ -16,9 +16,9 @@ def main() -> None:
     try:
         json_data = read_path_file(path)
         if json_data:
-            folder_path = json_data.get("folder", "")
-            input_file = json_data.get("input", "")
-            output_file = json_data.get("output", "")
+            folder_path = json_data[0]
+            input_file = json_data[1]
+            output_file = json_data[2]
 
             input_file_path = f"{folder_path}/{input_file}"
             output_file_path = f"{folder_path}/{output_file}"

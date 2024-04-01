@@ -1,5 +1,5 @@
 {
-    "folder" : "texts",
-    "input" : "cod5.txt",
-    "output" : "decrypted_text.txt"
+  "folder": "texts",
+  "input_text": "cod5.txt",
+  "output_text": "decrypted_text.txt"
 }
