@@ -1,5 +1,5 @@
 from work_with_json_file import read_path_file
-from alphabet import path, alph_pas
+from alphabet import PATH, ALPH_PATH
 from collections import defaultdict
 
 
@@ -47,8 +47,8 @@ def calculate_freq(text: str):
             decimal_freq = freq / total_quantity
             frequencies[char] = decimal_freq
 
-        with open(alph_pas, "a", encoding="utf-8") as file:
-            file.write("frequencies = " + str(frequencies) + "\n")
+        with open(ALPH_PATH, "a", encoding="utf-8") as file:
+            file.write(f"frequencies = {frequencies}\n")
 
     except Exception as e:
         print(f"An error occurred: {e}")
@@ -56,7 +56,7 @@ def calculate_freq(text: str):
 
 
 def main():
-    json_data = read_path_file(path)
+    json_data = read_path_file(PATH)
     folder_path = json_data[0]
     input_file = json_data[1]
     input_file_path = f"{folder_path}/{input_file}"

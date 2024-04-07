@@ -1,4 +1,4 @@
-polybius_square = [
+POLYBIUS_SQUARE = [
     ["А", "Б", "В", "Г", "Д", "Е"],
     ["Ж", "З", "И", "Й", "К", "Л"],
     ["М", "Н", "О", "П", "Р", "С"],
@@ -7,7 +7,6 @@ polybius_square = [
     ["Ю", "Я", "Ё", " ", " ", " "],
 ]
 
+PATH = "path.json"
 
-path = "path.json"
-
-punctuation_symbols = {",", ".", "-", "!", "?", ";", ":", "\n"}
+PUNCTUATION_SYMBOLS = {",", ".", "-", "!", "?", ";", ":", "\n"}

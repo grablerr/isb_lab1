@@ -1,5 +1,5 @@
 from work_with_json_file import read_path_file
-from square import polybius_square, punctuation_symbols, path
+from square import POLYBIUS_SQUARE, PUNCTUATION_SYMBOLS, PATH
 
 
 def encrypt_with_polybius_square(message: str, square: list) -> str:
@@ -16,7 +16,7 @@ def encrypt_with_polybius_square(message: str, square: list) -> str:
     message = message.upper()
     try:
         for char in message:
-            if char in punctuation_symbols:
+            if char in PUNCTUATION_SYMBOLS:
                 encrypted_text += char
             else:
                 char_found = False
@@ -49,7 +49,7 @@ def main() -> None:
     Prints success message if encryption and file saving are successful.
     Prints error messages for file not found and other exceptions.
     """
-    paths_data = read_path_file(path)
+    paths_data = read_path_file(PATH)
     if paths_data:
         folder = paths_data[0]
         input_text = paths_data[1]
@@ -59,7 +59,7 @@ def main() -> None:
             try:
                 with open(f"{folder}/{input_text}", "r", encoding="utf-8") as file:
                     text = file.read()
-                    encrypted_text = encrypt_with_polybius_square(text, polybius_square)
+                    encrypted_text = encrypt_with_polybius_square(text, POLYBIUS_SQUARE)
 
                 with open(f"{folder}/{output_text}", "w", encoding="utf-8") as file:
                     file.write(encrypted_text)

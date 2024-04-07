@@ -1,5 +1,5 @@
 from work_with_json_file import read_path_file
-from alphabet import path, key
+from alphabet import PATH, KEY
 from freq_analysis import get_text
 
 
@@ -14,7 +14,7 @@ def decoding(text: str, key_dict: dict) -> str:
 
 def main() -> None:
     try:
-        json_data = read_path_file(path)
+        json_data = read_path_file(PATH)
         if json_data:
             folder_path = json_data[0]
             input_file = json_data[1]
@@ -25,7 +25,7 @@ def main() -> None:
 
             text = get_text(input_file_path)
             if text:
-                decrypted_text = decoding(text, key)
+                decrypted_text = decoding(text, KEY)
                 if decrypted_text:
                     print(decrypted_text)
                     with open(output_file_path, "w", encoding="utf-8") as file:
