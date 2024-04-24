@@ -1,6 +1,6 @@
 from math import sqrt
-from scipy.special import erfc
-from constants_and_paths import CPP, JAVA
+from scipy.special import erfc, gammainc
+from constants_and_paths import CPP, JAVA, PI_VALUES, BLOCK_SIZE
 
 
 def get_sequence(file_name):
@@ -68,11 +68,54 @@ def same_consecutive_bits_test(sequence: str) -> float:
         return None
 
 
+def long_sequence_units_test(sequence: str) -> float:
+    """
+    Calculate the long sequence units test for a binary sequence.
+
+    Args:
+        sequence (str): A binary sequence to be tested.
+
+    Returns:
+        float: The p-value calculated for the test.
+    """
+    try:
+        blocks = [
+            sequence[i: i + BLOCK_SIZE] for i in range(0, len(sequence), BLOCK_SIZE)
+        ]
+        statistics = {"v1": 0, "v2": 0, "v3": 0, "v4": 0}
+        for block in blocks:
+            max_ones = 0
+            current_ones = 0
+            for bit in block:
+                if bit == "1":
+                    current_ones += 1
+                    max_ones = max(max_ones, current_ones)
+                else:
+                    current_ones = 0
+            if max_ones <= 1:
+                statistics["v1"] += 1
+            elif max_ones == 2:
+                statistics["v2"] += 1
+            elif max_ones == 3:
+                statistics["v3"] += 1
+            else:
+                statistics["v4"] += 1
+        chi_square = sum(
+            ((statistics[f"v{i + 1}"] - 16 * PI_VALUES[i]) ** 2) / (16 * PI_VALUES[i])
+            for i in range(4)
+        )
+        p_value = gammainc(1.5, chi_square / 2)
+        return p_value
+    except Exception as e:
+        print(f"An error occurred: {e}")
+        return None
+
+
 def main():
     cpp_sequence = get_sequence(CPP)
     java_sequence = get_sequence(JAVA)
-    print(same_consecutive_bits_test(cpp_sequence))
-    print(same_consecutive_bits_test(java_sequence))
+    print(long_sequence_units_test(cpp_sequence))
+    print(long_sequence_units_test(java_sequence))
 
 
 if __name__ == "__main__":
