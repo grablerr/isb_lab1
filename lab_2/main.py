@@ -114,8 +114,12 @@ def long_sequence_units_test(sequence: str) -> float:
 def main():
     cpp_sequence = get_sequence(CPP)
     java_sequence = get_sequence(JAVA)
-    print(long_sequence_units_test(cpp_sequence))
-    print(long_sequence_units_test(java_sequence))
+    print(f"Results of the frequency bitwise test:\nCPP: " + str(freq_bit_test(cpp_sequence)) + "\nJAVA: " + str(
+        freq_bit_test(java_sequence)) + "\n")
+    print(f"Test results for the same consecutive bits:\nCPP: " + str(
+        same_consecutive_bits_test(cpp_sequence)) + "\nJAVA: " + str(same_consecutive_bits_test(java_sequence)) + "\n")
+    print(f"Test results for the longest sequence of units in a block:\nCPP: " + str(
+        long_sequence_units_test(cpp_sequence)) + "\nJAVA: " + str(long_sequence_units_test(java_sequence)) + "\n")
 
 
 if __name__ == "__main__":
