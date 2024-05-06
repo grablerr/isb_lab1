@@ -1,5 +1,6 @@
 from math import sqrt
-from scipy.special import erfc, gammainc
+from scipy.special import erfc
+from mpmath import gammainc
 from constants_and_paths import CPP, JAVA, PI_VALUES, BLOCK_SIZE
 
 
@@ -92,14 +93,15 @@ def long_sequence_units_test(sequence: str) -> float:
                     max_ones = max(max_ones, current_ones)
                 else:
                     current_ones = 0
-            if max_ones <= 1:
-                statistics["v1"] += 1
-            elif max_ones == 2:
-                statistics["v2"] += 1
-            elif max_ones == 3:
-                statistics["v3"] += 1
-            else:
-                statistics["v4"] += 1
+            match max_ones:
+                case 0 | 1:
+                    statistics["v1"] += 1
+                case 2:
+                    statistics["v2"] += 1
+                case 3:
+                    statistics["v3"] += 1
+                case _:
+                    statistics["v4"] += 1
         chi_square = sum(
             ((statistics[f"v{i + 1}"] - 16 * PI_VALUES[i]) ** 2) / (16 * PI_VALUES[i])
             for i in range(4)
