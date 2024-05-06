@@ -1,4 +1,4 @@
-from cryptosystem import generate_keys
+from cryptosystem import generate_keys, encrypt_text, decrypt_text
 
 
 def main():
@@ -6,8 +6,14 @@ def main():
     enc_symmetric, private_key, public_key = generate_keys(key_length)
 
     print(enc_symmetric)
-    print(private_key)
-    print(public_key)
+
+    original_text = "Пример текста для шифрования и дешифрования."
+
+    encrypted_text = encrypt_text(original_text, enc_symmetric, private_key)
+    print("Зашифрованный текст:", encrypted_text)
+
+    decrypted_text = decrypt_text(encrypted_text, enc_symmetric, private_key)
+    print("Расшифрованный текст:", decrypted_text)
 
 
 if __name__ == "__main__":
