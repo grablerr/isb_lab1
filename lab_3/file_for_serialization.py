@@ -2,7 +2,7 @@ from typing import Optional
 
 from cryptography.hazmat.primitives.asymmetric import rsa
 from cryptography.hazmat.primitives import serialization
-from cryptography.hazmat.primitives.serialization import load_pem_private_key
+from cryptography.hazmat.primitives.serialization import load_pem_private_key, load_pem_public_key
 
 
 def read_private_key(path_to_key: str) -> Optional[rsa.RSAPrivateKey]:
@@ -10,6 +10,17 @@ def read_private_key(path_to_key: str) -> Optional[rsa.RSAPrivateKey]:
         with open(path_to_key, 'rb') as pem_in:
             private_bytes = pem_in.read()
         key = load_pem_private_key(private_bytes, password=None)
+    except FileNotFoundError:
+        key = None
+    finally:
+        return key
+
+
+def read_public_key(path_to_key: str) -> Optional[rsa.RSAPublicKey]:
+    try:
+        with open(path_to_key, 'rb') as pem_in:
+            private_bytes = pem_in.read()
+        key = load_pem_public_key(private_bytes, password=None)
     except FileNotFoundError:
         key = None
     finally:

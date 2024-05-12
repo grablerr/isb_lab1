@@ -4,5 +4,7 @@
     "symmetric_key": "files/symmetric_key.txt",
     "source_text": "files/text.txt",
     "encrypted_text": "files/encrypted_text.txt",
-    "decrypted_text": "files/decrypted_text.txt"
+    "decrypted_text": "files/decrypted_text.txt",
+    "encrypted_symmetric_key": "files/encrypted_symmetric_key.txt",
+    "decrypted_symmetric_key": "files/decrypted_symmetric_key.txt"
 }

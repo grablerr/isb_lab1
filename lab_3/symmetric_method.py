@@ -9,6 +9,17 @@ def generate_symmetric_key(key_length: int) -> bytes:
     return symmetric_key
 
 
+def save_symmetric_key(path: str, key: bytes) -> bool:
+    saved = True
+    try:
+        with open(path, 'wb') as key_file:
+            key_file.write(key)
+    except FileNotFoundError:
+        saved = False
+    finally:
+        return saved
+
+
 def encrypt_text(text: str, symmetric_key: bytes) -> bytes:
     padder = PKCS7(128).padder()
     b_text = bytes(text, 'UTF-8')
